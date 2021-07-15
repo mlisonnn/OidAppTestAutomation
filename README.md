@@ -1,66 +1,70 @@
-# OID App
-A command-line application that determines if an OID is a descendant of another OID.
+# OidTestAutomation
 
-These ancestor OIDs (or "prefix" OIDs) are specified in a configuration file.
-
-## Prerequisites
-The Java JDK/JRE (minimum version 8) must be installed.
-
-## Building and Deploying
-Using the supplied Gradle wrapper script:
-```
-$ ./gradlew build deploy
-```
-
-Note: unit tests are executed as part of the 'build' task.
-
-## Usage
-
-### Configuration
-This application requires a YAML document containing the ancestor ("prefix") OIDs.
-
-The following structure is required:
-```
-trap-type-oid-prefix:
-  - .1.3.6.1.6.3.1.1.5
-  - .1.3.6.1.2.1.10.166.3
-```
-
-The document must contain a key named 'trap-type-oid-prefix' which holds a list of OIDs.
-
-### Running
-After building/deploying, run the helper script to launch the application.
-
-The YAML document may be specified with option "-f".
-
-If not provided, the application will default to a YAML document with name 'snmp.yaml' in the project's 
-root directory.
-
-```
-$ ./bin/oid.sh
-```
-
-### Example Usage
-
-```
-$ ./bin/oid.sh
-Enter an OID to process.
-Enter 'quit' to exit at any time.
+Test Automation Suite was written in Java with JUnit framework. Main method of OidAppLauncher class was slightly modified to allow testing with writing and reading from stdin and stdout. Automation suite is trying to test the app from "white box" as much as it can. Running the app inside the suite, writing inputs and reading outputs. 
 
 
-.1.3.6.1.2.1.10.32.0.1.5.4.3.2.1
-.1.3.6.1.2.1.10.32.0.1.5.4.3.2.1: true
+Limitations:
+--------------
 
-.1.3.6.1.2.1.10.32.0.1   
-.1.3.6.1.2.1.10.32.0.1: true
+Automation hit few limitiation with reading output. Not all errors and exception are visible thru outputstream.
 
-.1.3.6.1 
-.1.3.6.1: false
+Class files:
+-------------
 
-.1.3.6.1.2.1.10.55     
-.1.3.6.1.2.1.10.55: false
+/oids-master/oid-app/src/test/java/com/bouff/oids/ListFromText.java <br>
+/oids-master/oid-app/src/test/java/com/bouff/oids/StdInOutManager.java <br>
+/oids-master/oid-app/src/test/java/com/bouff/oids/TestSuite.java <br>
 
-quit
-Exiting.
-$
-```
+Testing files:
+----------------
+
+/oids-master/testInputData.txt <br>
+/oids-master/testInputData2.txt <br>
+/oids-master/testInputData3.txt <br>
+
+Tests:
+-------
+
+ShouldBeTrue <br>
+ShouldBeFalse <br>
+ShouldBeInvalidEntry <br>
+ShouldBeTrueMultiple <br>
+ShouldBeTrueMultipleWithSuffix <br> 
+ShouldBeFalseMultipleWithSuffix <br>
+
+
+Running;
+---------
+
+Application can be build and deploy with Gradle as Main Project. Absolute paths need to be changed in TestSuite.java and StdInOutManager.java.
+
+
+Results:
+---------
+
+With one input: <br> 
+Testing, input: .1.3.6.1.6.3.1.1.5 <br> 
+Testing, output: .1.3.6.1.6.3.1.1.5: true <br> 
+Test finished in: 86 ms. <br>
+
+With multiple inputs read from the file: <br>
+...
+Testing, input: .1.2.6.1.4.1.9.10.127.0.1.6.2.45.2245.24645 <br> 
+Testing, output: .1.2.6.1.4.1.9.10.127.0.1.6.2.45.2245.24645: false <br>
+Test validaded: 84 traps. <br> 
+Test finished in: 90 ms. <br>
+
+
+Tests include simple performance runtime and amount of traps checked. <br> 
+
+
+Recommendations:
+-----------------
+
+Multiple Unit Tests should be sufficient for this kind of utility if there are no network calls.
+More test cases would be created if there is more details how and when is this utility being used. 
+
+
+
+Miroslav Lison
+
