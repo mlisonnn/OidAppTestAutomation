@@ -1,0 +1,5 @@
+# Project exclude paths
+/.gradle/
+/oid-app/build/
+/oid-app/build/classes/java/main/
+/oid-app/build/classes/java/test/
