@@ -1,3 +1,4 @@
+![Screen Shot 2021-07-14 at 8 02 51 PM](https://user-images.githubusercontent.com/18199526/125721284-f820c36a-b743-4c3a-9885-4fb55245e2fc.png)
 # OidTestAutomation
 
 Test Automation Suite was written in Java with JUnit framework. Main method of OidAppLauncher class was slightly modified to allow testing with writing and reading from stdin and stdout. Automation suite is trying to test the app from "white box" as much as it can. Running the app inside the suite, writing inputs and reading outputs. 
